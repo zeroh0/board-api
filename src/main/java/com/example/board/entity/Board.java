@@ -38,7 +38,7 @@ public class Board {
 	private LocalDateTime createAt;
 
 	@UpdateTimestamp
-	@Column(name = "update_at", nullable = false)
+	@Column(name = "update_at")
 	private LocalDateTime updateAt;
 
 	@Builder
