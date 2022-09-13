@@ -14,6 +14,8 @@ public class BoardResponse {
 
 	private String title;
 
+	private String cont;
+
 	private int viewCnt;
 
 	private LocalDateTime createAt;
@@ -22,6 +24,7 @@ public class BoardResponse {
 		return BoardResponse.builder()
 			.id(board.getId())
 			.title(board.getTitle())
+			.cont(board.getCont())
 			.viewCnt(board.getViewCnt())
 			.createAt(board.getCreateAt())
 			.build();
