@@ -1,5 +1,6 @@
 package com.example.board.service;
 
+import com.example.board.dto.BoardListResponse;
 import com.example.board.dto.BoardResponse;
 import com.example.board.dto.CreateBoardRequest;
 import com.example.board.dto.CreateBoardResponse;
@@ -9,6 +10,8 @@ import com.example.common.exception.NoDataException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -40,4 +43,15 @@ public class BoardService {
 
 		return BoardResponse.fromEntity(board);
 	}
+
+	/**
+	 * 게시글 목록 조회
+	 * @return
+	 */
+	public List<BoardListResponse> findAll() {
+		List<Board> boardList = boardRepository.findAll();
+
+		return BoardListResponse.fromEntityList(boardList);
+	}
+
 }
