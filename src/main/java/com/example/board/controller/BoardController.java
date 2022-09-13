@@ -1,5 +1,6 @@
 package com.example.board.controller;
 
+import com.example.board.dto.BoardResponse;
 import com.example.board.dto.CreateBoardRequest;
 import com.example.board.dto.CreateBoardResponse;
 import com.example.board.service.BoardService;
@@ -24,6 +25,18 @@ public class BoardController {
 	@PostMapping("/")
 	public ResponseEntity<CreateBoardResponse> save(@Valid @RequestBody CreateBoardRequest requestDto) {
 		CreateBoardResponse responseDto = boardService.save(requestDto);
+
+		return ResponseEntity.ok(responseDto);
+	}
+
+	/**
+	 * 게시글 조회
+	 * @param id
+	 * @return
+	 */
+	@GetMapping("/{id}")
+	public ResponseEntity<BoardResponse> findById(@PathVariable Long id) {
+		BoardResponse responseDto = boardService.findById(id);
 
 		return ResponseEntity.ok(responseDto);
 	}
