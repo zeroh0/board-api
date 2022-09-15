@@ -1,8 +1,7 @@
 package com.example.board.dto;
 
 import com.example.board.entity.Board;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -10,6 +9,8 @@ import java.util.stream.Collectors;
 
 @Getter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BoardListResponse {
 
 	private Long id;
