@@ -54,4 +54,16 @@ public class BoardService {
 		return BoardListResponse.fromEntityList(boardList);
 	}
 
+	/**
+	 * 게시글 삭제
+	 * @param id
+	 * @return
+	 */
+	public Long delete(Long id) {
+		Board board = boardRepository.findById(id).orElseThrow(NoDataException::new);
+		boardRepository.delete(board);
+
+		return board.getId();
+	}
+
 }

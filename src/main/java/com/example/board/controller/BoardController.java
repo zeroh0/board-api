@@ -54,4 +54,13 @@ public class BoardController {
 		return ResponseEntity.ok(responseDto);
 	}
 
+	/**
+	 * 게시글 삭제
+	 * @param id
+	 */
+	@DeleteMapping("/{id}")
+	public void delete(@PathVariable Long id) {
+		boardService.delete(id);
+	}
+
 }
