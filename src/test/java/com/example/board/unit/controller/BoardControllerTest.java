@@ -26,6 +26,7 @@ class BoardControllerTest {
 	@Test
 	@DisplayName("게시글 작성 테스트")
 	void save() {
+		// given
 		CreateBoardRequest requestDto = CreateBoardRequest.builder()
 			.title("게시글 제목 테스트")
 			.cont("게시글 내용 테스트")
@@ -33,6 +34,7 @@ class BoardControllerTest {
 
 		when(boardService.save(requestDto)).thenReturn(CreateBoardResponse.builder().id(1L).build());
 
+		// when, then
 		Assertions.assertThat(boardController.save(requestDto).getBody().getId()).isEqualTo(1L);
 	}
 
