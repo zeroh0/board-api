@@ -38,4 +38,14 @@ class BoardControllerTest {
 		Assertions.assertThat(boardController.save(requestDto).getBody().getId()).isEqualTo(1L);
 	}
 
+	@Test
+	@DisplayName("게시글 삭제 테스트")
+	void delete() {
+		// given
+		when(boardService.delete(1L)).thenReturn(null);
+
+		// when, then
+		boardController.delete(1L);
+	}
+
 }
