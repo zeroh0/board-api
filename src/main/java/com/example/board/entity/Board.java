@@ -1,9 +1,6 @@
 package com.example.board.entity;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -41,7 +38,7 @@ public class Board {
 	@Column(name = "update_at")
 	private LocalDateTime updateAt;
 
-	@Builder
+	@Builder(toBuilder = true)
 	public Board(Long id, String title, String cont, int viewCnt, LocalDateTime createAt, LocalDateTime updateAt) {
 		this.id = id;
 		this.title = title;
