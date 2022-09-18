@@ -1,6 +1,7 @@
 package com.example.board.unit.controller;
 
 import com.example.board.controller.BoardController;
+import com.example.board.dto.BoardResponse;
 import com.example.board.dto.CreateBoardRequest;
 import com.example.board.dto.CreateBoardResponse;
 import com.example.board.service.BoardService;
@@ -22,6 +23,14 @@ class BoardControllerTest {
 
 	@Mock
 	BoardService boardService;
+
+	@Test
+	@DisplayName("게시글 조회 테스트")
+	void findById() {
+		when(boardService.findById(1L)).thenReturn(BoardResponse.builder().id(1L).build());
+
+		boardController.findById(1L);
+	}
 
 	@Test
 	@DisplayName("게시글 작성 테스트")
