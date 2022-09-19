@@ -1,9 +1,6 @@
 package com.example.board.controller;
 
-import com.example.board.dto.BoardListResponse;
-import com.example.board.dto.BoardResponse;
-import com.example.board.dto.CreateBoardRequest;
-import com.example.board.dto.CreateBoardResponse;
+import com.example.board.dto.*;
 import com.example.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +35,18 @@ public class BoardController {
 	@PostMapping("/")
 	public ResponseEntity<CreateBoardResponse> save(@Valid @RequestBody CreateBoardRequest requestDto) {
 		CreateBoardResponse responseDto = boardService.save(requestDto);
+
+		return ResponseEntity.ok(responseDto);
+	}
+
+	/**
+	 * 게시글 수정
+	 * @param requestDto
+	 * @return
+	 */
+	@PutMapping("/{id}")
+	public ResponseEntity<UpdateBoardResponse> update(@Valid @RequestBody UpdateBoardRequest requestDto) {
+		UpdateBoardResponse responseDto = boardService.update(requestDto);
 
 		return ResponseEntity.ok(responseDto);
 	}

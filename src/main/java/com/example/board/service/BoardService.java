@@ -1,9 +1,6 @@
 package com.example.board.service;
 
-import com.example.board.dto.BoardListResponse;
-import com.example.board.dto.BoardResponse;
-import com.example.board.dto.CreateBoardRequest;
-import com.example.board.dto.CreateBoardResponse;
+import com.example.board.dto.*;
 import com.example.board.entity.Board;
 import com.example.board.repository.BoardRepository;
 import com.example.common.exception.NoDataException;
@@ -29,6 +26,20 @@ public class BoardService {
 		Board board = CreateBoardRequest.toEntity(requestDto);
 
 		return CreateBoardResponse.builder()
+			.id(boardRepository.save(board).getId())
+			.build();
+	}
+
+	/**
+	 * 게시글 수정
+	 * @param requestDto
+	 * @return
+	 */
+	public UpdateBoardResponse update(UpdateBoardRequest requestDto) {
+		Board board = boardRepository.findById(requestDto.getId()).orElseThrow(NoDataException::new);
+		board = board.toBuilder().id(board.getId()).build();
+
+		return UpdateBoardResponse.builder()
 			.id(boardRepository.save(board).getId())
 			.build();
 	}
