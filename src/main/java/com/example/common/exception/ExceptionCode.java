@@ -5,7 +5,10 @@ import lombok.Getter;
 @Getter
 public enum ExceptionCode {
 
-	NO_DATA_IN_DB(0, "데이터베이스에 값이 존재하지 않습니다.");
+	NO_DATA_IN_DB(0, "데이터베이스에 값이 존재하지 않습니다."),
+
+	INVALID_INPUT_VALUE(400, " 유효하지 않는 입력값입니다.")
+	;
 
 	private final int code;
 	private final String msg;

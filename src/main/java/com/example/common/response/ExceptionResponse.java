@@ -1,5 +1,6 @@
 package com.example.common.response;
 
+import com.example.common.exception.ExceptionCode;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -10,9 +11,9 @@ public class ExceptionResponse {
 	private String message;
 
 	@Builder
-	public ExceptionResponse(int code, String message) {
-		this.code = code;
-		this.message = message;
+	public ExceptionResponse(ExceptionCode exceptionCode) {
+		this.code = exceptionCode.getCode();
+		this.message = exceptionCode.getMsg();
 	}
 
 }
