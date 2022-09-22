@@ -1,6 +1,7 @@
 package com.example.common.controller;
 
 import com.example.common.exception.ExceptionCode;
+import com.example.common.exception.NoDataException;
 import com.example.common.response.ExceptionResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,13 @@ public class GlobalExceptionHandler {
 	public ExceptionResponse handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
 		log.info("handleMethodArgumentNotValidException", e);
 		return new ExceptionResponse(ExceptionCode.INVALID_INPUT_VALUE);
+	}
+
+	@ResponseStatus(value = HttpStatus.NOT_FOUND)
+	@ExceptionHandler(NoDataException.class)
+	public ExceptionResponse handleNoDataException(NoDataException e) {
+		log.info("handleNoDataException", e);
+		return new ExceptionResponse(ExceptionCode.NO_DATA_IN_DB);
 	}
 
 }
