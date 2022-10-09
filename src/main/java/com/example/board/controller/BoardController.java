@@ -20,7 +20,7 @@ public class BoardController {
 	 * 게시글 목록 조회
 	 * @return
 	 */
-	@GetMapping("/")
+	@GetMapping("")
 	public ResponseEntity<List<BoardListResponse>> findAll() {
 		List<BoardListResponse> responseDto = boardService.findAll();
 
@@ -32,7 +32,7 @@ public class BoardController {
 	 * @param requestDto
 	 * @return
 	 */
-	@PostMapping("/")
+	@PostMapping("")
 	public ResponseEntity<CreateBoardResponse> save(@Valid @RequestBody CreateBoardRequest requestDto) {
 		CreateBoardResponse responseDto = boardService.save(requestDto);
 
