@@ -5,9 +5,10 @@ import com.example.common.exception.NoDataException;
 import com.example.common.response.ExceptionResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @Slf4j
@@ -15,22 +16,30 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
 	/**
-	 * javax.validation.Valid or @Validated 으로 binding error 발생시 발생한다.
-	 * HttpMessageConverter 에서 등록한 HttpMessageConverter binding 못할경우 발생
-	 * 주로 @RequestBody, @RequestPart 어노테이션에서 발생
+	 * Handles MethodArgumentNotValidException and returns a ResponseEntity with an ExceptionResponse object.
+	 *
+	 * @param e The MethodArgumentNotValidException to be handled.
+	 * @param bindingResult The BindingResult object containing validation errors.
+	 * @return A ResponseEntity object with an ExceptionResponse body and HTTP status code of 400 (Bad Request).
 	 */
-	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ExceptionResponse handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
-		log.info("handleMethodArgumentNotValidException", e);
-		return new ExceptionResponse(ExceptionCode.INVALID_INPUT_VALUE);
+	public ResponseEntity<ExceptionResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException e, BindingResult bindingResult) {
+		log.error("handleMethodArgumentNotValidException", e);
+		ExceptionResponse response = ExceptionResponse.of(ExceptionCode.INVALID_INPUT_VALUE, bindingResult);
+		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 	}
 
-	@ResponseStatus(value = HttpStatus.NOT_FOUND)
+	/**
+	 * Handles a NoDataException and returns a ResponseEntity with an ExceptionResponse object.
+	 *
+	 * @param e The NoDataException to be handled.
+	 * @return A ResponseEntity object with an ExceptionResponse body and HTTP status code of 404 (Not Found).
+	 */
 	@ExceptionHandler(NoDataException.class)
-	public ExceptionResponse handleNoDataException(NoDataException e) {
-		log.info("handleNoDataException", e);
-		return new ExceptionResponse(ExceptionCode.NO_DATA_IN_DB);
+	public ResponseEntity<ExceptionResponse> handleNoDataException(NoDataException e) {
+		log.error("handleNoDataException", e);
+		ExceptionResponse response = ExceptionResponse.of(ExceptionCode.INVALID_INPUT_VALUE);
+		return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
 	}
 
 }
