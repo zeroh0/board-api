@@ -16,7 +16,7 @@ public abstract class RestDocsTemplate {
 
 	@BeforeEach
 	void setUp(RestDocumentationContextProvider restDocumentation) {
-		this.mockMvc = MockMvcBuilders.standaloneSetup()
+		this.mockMvc = MockMvcBuilders.standaloneSetup(initController())
 				.apply(documentationConfiguration(restDocumentation))
 				.build();
 	}
