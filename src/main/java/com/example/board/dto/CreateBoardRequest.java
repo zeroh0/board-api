@@ -1,9 +1,8 @@
 package com.example.board.dto;
 
 import com.example.board.entity.Board;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
-
-import javax.validation.constraints.NotNull;
 
 @Getter
 @Builder
