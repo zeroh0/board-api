@@ -16,6 +16,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -46,7 +47,7 @@ public class BoardControllerRestDocsTest extends RestDocsTemplate {
 		mockMvc.perform(get("/api/board"))
 				.andExpect(status().isOk())
 				.andDo(document("boards/get-all",
-						preprocessResponse(),
+						preprocessResponse(prettyPrint()),
 						responseFields(
 								fieldWithPath("[].id").type(JsonFieldType.NUMBER).description("게시글 ID"),
 								fieldWithPath("[].title").type(JsonFieldType.STRING).description("게시글 제목"),
