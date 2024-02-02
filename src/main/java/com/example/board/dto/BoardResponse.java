@@ -1,6 +1,7 @@
 package com.example.board.dto;
 
 import com.example.board.entity.Board;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -19,6 +20,7 @@ public class BoardResponse {
 
 	private int viewCnt;
 
+	@JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
 	private LocalDateTime createAt;
 
 	public static BoardResponse fromEntity(Board board) {
