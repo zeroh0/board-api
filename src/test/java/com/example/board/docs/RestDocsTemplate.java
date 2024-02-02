@@ -6,6 +6,7 @@ import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.filter.CharacterEncodingFilter;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 
@@ -18,6 +19,7 @@ public abstract class RestDocsTemplate {
 	void setUp(RestDocumentationContextProvider restDocumentation) {
 		this.mockMvc = MockMvcBuilders.standaloneSetup(initController())
 				.apply(documentationConfiguration(restDocumentation))
+				.addFilters(new CharacterEncodingFilter("UTF-8", true))
 				.build();
 	}
 
