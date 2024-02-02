@@ -10,19 +10,20 @@ import com.example.board.service.BoardService;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class BoardControllerRestDocsTest extends RestDocsTemplate {
@@ -93,6 +94,37 @@ public class BoardControllerRestDocsTest extends RestDocsTemplate {
 								fieldWithPath("cont").type(JsonFieldType.STRING).description("내용"),
 								fieldWithPath("viewCnt").type(JsonFieldType.NUMBER).description("조회수"),
 								fieldWithPath("createAt").type(JsonFieldType.STRING).description("등록일")
+						)
+				));
+	}
+
+	@DisplayName("게시글 작성 API")
+	@Test
+	void 게시글_작성_API() throws Exception {
+		CreateBoardResponse createBoardResponse = CreateBoardResponse.builder()
+				.id(1L)
+				.build();
+
+		when(boardService.save(any(CreateBoardRequest.class))).thenReturn(createBoardResponse);
+
+		mockMvc.perform(post("/api/board/")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content("""
+								 {
+								 	"title": "제목1",
+								 	"cont": "내용1"
+								 }
+								"""))
+				.andExpect(status().isOk())
+				.andDo(document("boards/create",
+						preprocessRequest(prettyPrint()),
+						preprocessResponse(prettyPrint()),
+						requestFields(
+								fieldWithPath("title").type(JsonFieldType.STRING).description("제목"),
+								fieldWithPath("cont").type(JsonFieldType.STRING).description("내용")
+						),
+						responseFields(
+								fieldWithPath("id").type(JsonFieldType.NUMBER).description("id")
 						)
 				));
 	}
